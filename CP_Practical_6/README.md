@@ -1,89 +1,47 @@
-Submit: code file, screenshots, and a reflection for the implementation
+# CP_Practical_6 — README
 
-// 1. Implement the basic trie algorithm and perform the insert, search and deletion operations
+## Overview
+This directory contains three C++ implementations for Practical 6. Include source files, screenshots, and a short reflection when submitting.
 
-#include <iostream>
-#include <unordered_map>
-#include <memory>
-using namespace std;
-class TrieNode {
-public:
-    unordered_map<char, shared_ptr<TrieNode>> children;
-    bool isEndOfWord;
+## Files
+- program1.cpp — brief description of what this file does
+- program2.cpp — brief description of what this file does
+- program3.cpp — brief description of what this file does
 
-    TrieNode() : isEndOfWord(false) {}
-};
+(Replace the filenames above with the actual .cpp filenames if they differ.)
 
-class Trie {
-private:
-    shared_ptr<TrieNode> root;
+## Build & Run
+Basic compile and run steps for each file:
+- g++ program1.cpp -o program1 && ./program1
+- g++ program2.cpp -o program2 && ./program2
+- g++ program3.cpp -o program3 && ./program3
 
-public:
-    Trie() {
-        root = make_shared<TrieNode>();
-    }
+Adjust compiler flags as needed (e.g., -std=c++17, -O2).
 
-    // Insert a word into the trie
-    void insert(const string& word) {
-        auto current = root;
-        for (char c : word) {
-            if (!current->children[c]) {
-                current->children[c] = make_shared<TrieNode>();
-            }
-            current = current->children[c];
-        }
-        current->isEndOfWord = true;
-    }
+## Screenshots
+Add one screenshot per source file showing program output or important behavior.
 
-    // Search for a word in the trie
-    bool search(const string& word) {
-        auto current = root;
-        for (char c : word) {
-            if (!current->children[c]) {
-                return false;
-            }
-            current = current->children[c];
-        }
-        return current->isEndOfWord;
-    }
+- Screenshot for program1.cpp  
+    ![program1 output](screenshots/program1.png)
 
-    // Delete a word from the trie
-    bool remove(const string& word) {
-        return removeHelper(root, word, 0);
-    }
+- Screenshot for program2.cpp  
+    ![program2 output](screenshots/program2.png)
 
-private:
-    bool removeHelper(shared_ptr<TrieNode> node, const string& word, int depth) {
-        if (!node) return false;
+- Screenshot for program3.cpp  
+    ![program3 output](screenshots/program3.png)
 
-        if (depth == word.size()) {
-            if (node->isEndOfWord) {
-                node->isEndOfWord = false;
-                return node->children.empty();
-            }
-            return false;
-        }
+Replace the placeholder images in the screenshots/ folder with actual PNGs or JPGs.
 
-        char c = word[depth];
-        if (removeHelper(node->children[c], word, depth + 1)) {
-            node->children.erase(c);
-            return !node->isEndOfWord && node->children.empty();
-        }
-        return false;
-    }
-};
+## Submission Checklist
+- [ ] All .cpp source files
+- [ ] Screenshots folder with 3 images
+- [ ] This README.md
+- [ ] Short reflection (below)
 
-int main() {
-    Trie trie;
-    trie.insert("hello");
-    trie.insert("world");
+## Reflection (to include in submission)
+- What you implemented (2–4 sentences)
+- Key challenges and how you solved them
+- What you learned
+- Possible improvements or extensions
 
-    cout << "Search 'hello': " << trie.search("hello") << endl;
-    cout << "Search 'world': " << trie.search("world") << endl;
-    cout << "Search 'trie': " << trie.search("trie") << endl;
-
-    trie.remove("hello");
-    cout << "Search 'hello' after deletion: " << trie.search("hello") << endl;
-
-    return 0;
-}
+Fill the reflection here before submitting.
