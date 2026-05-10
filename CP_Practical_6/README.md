@@ -1,47 +1,55 @@
-# CP_Practical_6 — README
+# CP Practical 6 — String Algorithms
 
 ## Overview
-This directory contains three C++ implementations for Practical 6. Include source files, screenshots, and a short reflection when submitting.
+This directory contains 3 CPP implementations for Practical 6. Include source files, screenshots and a short reflection.
 
 ## Files
-- program1.cpp — brief description of what this file does
-- program2.cpp — brief description of what this file does
-- program3.cpp — brief description of what this file does
+- **trie.cpp:** Trie (Prefix Tree) data structure for efficient string storage, search, and deletion.
+- **patricia.cpp:** PATRICIA Trie (Practical Algorithm to Retrieve Information Coded in Alphanumeric) for compressed trie implementation.  
+- **manachar.cpp:** Manacher's Algorithm for finding longest palindromic substrings in O(n) time.  
 
-(Replace the filenames above with the actual .cpp filenames if they differ.)
-
-## Build & Run
+## Build and Run
 Basic compile and run steps for each file:
-- g++ program1.cpp -o program1 && ./program1
-- g++ program2.cpp -o program2 && ./program2
-- g++ program3.cpp -o program3 && ./program3
+- g++ -std=c++17 manachar.cpp -o manachar && ./manachar
+- g++ -std=c++17 trie.cpp -o trie && ./trie
+- g++ -std=c++17 patricia.cpp -o patricia && ./patricia
 
-Adjust compiler flags as needed (e.g., -std=c++17, -O2).
 
 ## Screenshots
-Add one screenshot per source file showing program output or important behavior.
+- Screenshot for trie.cpp  
+    ![trie output](screenshots/trie.png)
 
-- Screenshot for program1.cpp  
-    ![program1 output](screenshots/program1.png)
+- Screenshot for patricia.cpp  
+    ![patricia output](screenshots/patricia.png)
 
-- Screenshot for program2.cpp  
-    ![program2 output](screenshots/program2.png)
+- Screenshot for manachar.cpp  
+    ![manachar output](screenshots/manachar.png)
 
-- Screenshot for program3.cpp  
-    ![program3 output](screenshots/program3.png)
+## Reflection
 
-Replace the placeholder images in the screenshots/ folder with actual PNGs or JPGs.
+This practical implements three fundamental string and trie-based algorithms:
 
-## Submission Checklist
-- [ ] All .cpp source files
-- [ ] Screenshots folder with 3 images
-- [ ] This README.md
-- [ ] Short reflection (below)
+1. **Manacher's Algorithm:**  An O(n) linear time algorithm for finding the longest palindromic substring in any string. It uses the mirror property of palindromes and maintains a center and right boundary to avoid redundant comparisons.
 
-## Reflection (to include in submission)
-- What you implemented (2–4 sentences)
-- Key challenges and how you solved them
-- What you learned
-- Possible improvements or extensions
+2. **Trie (Prefix Tree):** A tree data structure that stores strings efficiently with O(m) insertion, search, and deletion where m is the string length. Includes support for dynamic deletion while maintaining tree integrity.
 
-Fill the reflection here before submitting.
+3. **PATRICIA Trie:** A space optimized variant of the standard trie that compresses paths with single children, reducing memory usage while maintaining efficient string operations.
+
+### Key Challenges and Solutions
+
+- **Manacher's Algorithm:** Understanding the mirror property and boundary expansion was initially complex. The solution involved carefully tracking the center and right boundary to leverage previously computed palindrome radius, reducing redundant character comparisons.
+
+- **Trie Deletion:** Implementing safe deletion that properly handles leaf nodes and internal nodes required recursive backtracking. The challenge was ensuring nodes are only deleted when they have no remaining children and are not word endings.
+
+- **PATRICIA Trie Complexity:** The main challenge was implementing the string prefix compression logic and binary tree navigation. Using `shared_ptr` for memory management simplified dynamic node creation and deletion.
+
+### What You Learned
+
+- **String Algorithms:** Gained deep insight into advanced string processing techniques that operate in linear time, particularly how Manacher's algorithm exploits palindrome properties for efficiency.
+
+- **Trie Variants:** Understood the tradeoffs between standard tries (simpler, more memory) and PATRICIA tries (compressed, more complex logic).
+
+- **Memory Management:** Experienced practical application of smart pointers and dynamic memory allocation in C++ for tree-based data structures.
+
+- **Time Complexity Analysis:** Recognized how algorithm design choices (e.g., using mirror properties) dramatically improve performance from O(n²) naive approach to O(n).
+

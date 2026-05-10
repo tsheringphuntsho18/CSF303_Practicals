@@ -1,49 +1,50 @@
-// 2. Implement PATRICIA algorithm and perform insert, search, and deletion
+// PATRICIA algorithm
 
 #include <iostream>
 #include <memory>
 #include <string>
+using namespace std;
 
 class PatriciaNode {
 public:
-    std::string key;
-    std::shared_ptr<PatriciaNode> left;
-    std::shared_ptr<PatriciaNode> right;
+    string key;
+    shared_ptr<PatriciaNode> left;
+    shared_ptr<PatriciaNode> right;
 
-    PatriciaNode(const std::string& k) : key(k), left(nullptr), right(nullptr) {}
+    PatriciaNode(const string& k) : key(k), left(nullptr), right(nullptr) {}
 };
 
 class PatriciaTrie {
 private:
-    std::shared_ptr<PatriciaNode> root;
+    shared_ptr<PatriciaNode> root;
 
 public:
     PatriciaTrie() : root(nullptr) {}
 
     // Insert a word into the Patricia Trie
-    void insert(const std::string& word) {
+    void insert(const string& word) {
         root = insertHelper(root, word);
     }
 
     // Search for a word in the Patricia Trie
-    bool search(const std::string& word) {
+    bool search(const string& word) {
         return searchHelper(root, word);
     }
 
     // Delete a word from the Patricia Trie
-    void remove(const std::string& word) {
+    void remove(const string& word) {
         root = removeHelper(root, word);
     }
 
 private:
-    std::shared_ptr<PatriciaNode> insertHelper(std::shared_ptr<PatriciaNode> node, const std::string& word) {
-        if (!node) return std::make_shared<PatriciaNode>(word);
+    shared_ptr<PatriciaNode> insertHelper(shared_ptr<PatriciaNode> node, const string& word) {
+        if (!node) return make_shared<PatriciaNode>(word);
 
         // Find the common prefix
         int commonPrefixLength = findCommonPrefix(node->key, word);
         if (commonPrefixLength == 0) {
             // No common prefix, create a new root
-            auto newRoot = std::make_shared<PatriciaNode>(word);
+            auto newRoot = make_shared<PatriciaNode>(word);
             newRoot->left = node;
             return newRoot;
         }
@@ -54,13 +55,13 @@ private:
         }
 
         // Split the node
-        auto newInternalNode = std::make_shared<PatriciaNode>(node->key.substr(0, commonPrefixLength));
-        newInternalNode->left = std::make_shared<PatriciaNode>(node->key.substr(commonPrefixLength));
-        newInternalNode->right = std::make_shared<PatriciaNode>(word.substr(commonPrefixLength));
+        auto newInternalNode = make_shared<PatriciaNode>(node->key.substr(0, commonPrefixLength));
+        newInternalNode->left = make_shared<PatriciaNode>(node->key.substr(commonPrefixLength));
+        newInternalNode->right = make_shared<PatriciaNode>(word.substr(commonPrefixLength));
         return newInternalNode;
     }
 
-    bool searchHelper(std::shared_ptr<PatriciaNode> node, const std::string& word) {
+    bool searchHelper(shared_ptr<PatriciaNode> node, const string& word) {
         if (!node) return false;
 
         if (node->key == word) return true;
@@ -72,7 +73,7 @@ private:
         }
     }
 
-    std::shared_ptr<PatriciaNode> removeHelper(std::shared_ptr<PatriciaNode> node, const std::string& word) {
+    shared_ptr<PatriciaNode> removeHelper(shared_ptr<PatriciaNode> node, const string& word) {
         if (!node) return nullptr;
 
         if (node->key == word) {
@@ -98,15 +99,15 @@ private:
         return node;
     }
 
-    std::shared_ptr<PatriciaNode> findMin(std::shared_ptr<PatriciaNode> node) {
+    shared_ptr<PatriciaNode> findMin(shared_ptr<PatriciaNode> node) {
         while (node && node->left) {
             node = node->left;
         }
         return node;
     }
 
-    int findCommonPrefix(const std::string& s1, const std::string& s2) {
-        int minLength = std::min(s1.size(), s2.size());
+    int findCommonPrefix(const string& s1, const string& s2) {
+        int minLength = min(s1.size(), s2.size());
         for (int i = 0; i < minLength; i++) {
             if (s1[i] != s2[i]) return i;
         }
@@ -119,12 +120,12 @@ int main() {
     trie.insert("hello");
     trie.insert("world");
 
-    std::cout << "Search 'hello': " << trie.search("hello") << std::endl;
-    std::cout << "Search 'world': " << trie.search("world") << std::endl;
-    std::cout << "Search 'trie': " << trie.search("trie") << std::endl;
+    cout << "Search 'hello': " << trie.search("hello") << endl;
+    cout << "Search 'world': " << trie.search("world") << endl;
+    cout << "Search 'tshering': " << trie.search("tshering") << endl;
 
     trie.remove("hello");
-    std::cout << "Search 'hello' after deletion: " << trie.search("hello") << std::endl;
+    cout << "Search 'hello' after deletion: " << trie.search("hello") << endl;
 
     return 0;
 }
